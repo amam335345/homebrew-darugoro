@@ -13,15 +13,15 @@ cask "darugoro" do
     strategy :github_latest
   end
 
-  depends_on macos: ">= :monterey"
+  depends_on macos: :monterey
 
   app "DaruGoro.app"
 
   uninstall quit: "com.amamamam.DaruGoro"
 
   zap trash: [
-    "~/Library/Application Support/DAWPad",
     "~/Library/Application Support/DaruGoro",
+    "~/Library/Application Support/DAWPad",
     "~/Library/Caches/com.amamamam.DaruGoro",
     "~/Library/Caches/com.amamamam.DAWPad",
     "~/Library/Preferences/com.amamamam.DaruGoro.plist",
