@@ -1,0 +1,40 @@
+# darugoro-site の最新リリース（ベータを除く）を見て、Cask の version と sha256 を書き換える。
+# Checks the latest darugoro-site release (betas excluded) and updates the Cask's version and sha256.
+name: Update Cask
+
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update Casks/darugoro.rb
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          cask=Casks/darugoro.rb
+          tag=$(gh release view -R amam335345/darugoro-site --json tagName -q .tagName)
+          latest=${tag#v}
+          current=$(sed -n 's/^  version "\(.*\)"$/\1/p' "$cask")
+          echo "latest=$latest current=$current"
+          if [ "$latest" = "$current" ]; then
+            echo "Already up to date."
+            exit 0
+          fi
+          gh release download "$tag" -R amam335345/darugoro-site -p "DaruGoro-$latest.dmg" -D "$RUNNER_TEMP"
+          sha=$(sha256sum "$RUNNER_TEMP/DaruGoro-$latest.dmg" | cut -d' ' -f1)
+          sed -i -e "s/^  version \".*\"$/  version \"$latest\"/" -e "s/^  sha256 \".*\"$/  sha256 \"$sha\"/" "$cask"
+          git diff
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "darugoro $latest"
+          git push
