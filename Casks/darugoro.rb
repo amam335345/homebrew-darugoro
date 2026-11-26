@@ -20,13 +20,9 @@ cask "darugoro" do
 
   zap trash: [
     "~/Library/Application Support/DaruGoro",
-    "~/Library/Application Support/DAWPad",
     "~/Library/Caches/com.amamamam.DaruGoro",
-    "~/Library/Caches/com.amamamam.DAWPad",
     "~/Library/Preferences/com.amamamam.DaruGoro.plist",
-    "~/Library/Preferences/com.amamamam.DAWPad.plist",
     "~/Library/Saved Application State/com.amamamam.DaruGoro.savedState",
-    "~/Library/Saved Application State/com.amamamam.DAWPad.savedState",
   ]
 
   caveats <<~EOS
