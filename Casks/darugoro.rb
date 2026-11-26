@@ -2,8 +2,7 @@ cask "darugoro" do
   version "1.1.0"
   sha256 "c54f761d5003827ed447c17dee34af18a48088050292e9a3e2194760dd8f965c"
 
-  url "https://github.com/amam335345/darugoro-site/releases/download/v#{version}/DaruGoro-#{version}.dmg",
-      verified: "github.com/amam335345/darugoro-site/"
+  url "https://github.com/amam335345/darugoro-site/releases/download/v#{version}/DaruGoro-#{version}.dmg"
   name "DaruGoro"
   desc "Control your DAW with a DualSense controller"
   homepage "https://darugoro.amamamam.com/"
